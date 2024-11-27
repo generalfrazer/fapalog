@@ -67,6 +67,16 @@ app.get('/logs', (req, res) => {
   res.json(logData);
 });
 
+app.get('/api/logs', async (req, res) => {
+  try {
+    // Fetch all the logs from the database, sorted in descending order by date.
+    const logs = await Log.find().sort({ date: -1 });
+    res.json(logs);  // Send back the logs as JSON
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

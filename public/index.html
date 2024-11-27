@@ -12,7 +12,43 @@
     <button id="logButton">Fapped!</button>
     <p>Total Count: <span id="totalCount">0</span></p>
     <p>Most Recent Log: <span id="mostRecentLog">N/A</span></p>
+
+    <!-- New Section for Log History -->
+    <div id="log-section">
+      <h2>Log History</h2>
+      <ul id="log-list"></ul> <!-- This list will be filled with log items -->
+    </div>
   </div>
+
+  <!-- Include Axios for Making HTTP Requests -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  
+  <!-- Your existing app.js script for handling button click -->
   <script src="app.js"></script>
+  
+  <!-- Add new script to fetch and display log history -->
+  <script>
+    // Run the following code when the DOM has fully loaded
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // Fetch logs using a GET request to the /api/logs route
+        const response = await axios.get('/api/logs');
+        const logs = response.data;
+
+        // Get the log-list container from the HTML
+        const logList = document.getElementById('log-list');
+        logList.innerHTML = ''; // Clear any existing content
+
+        // Loop through the logs and create a list item for each log
+        logs.forEach((log) => {
+          const listItem = document.createElement('li');
+          listItem.textContent = `Log Date: ${new Date(log.date).toLocaleString()}`;
+          logList.appendChild(listItem); // Add each list item to the log list container
+        });
+      } catch (error) {
+        console.error('Error fetching logs:', error);
+      }
+    });
+  </script>
 </body>
 </html>
