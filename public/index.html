@@ -22,10 +22,10 @@
 
   <!-- Include Axios for Making HTTP Requests -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  
+
   <!-- Your existing app.js script for handling button click -->
   <script src="app.js"></script>
-  
+
   <!-- Add new script to fetch and display log history -->
   <script>
     // Run the following code when the DOM has fully loaded
@@ -42,7 +42,7 @@
         // Loop through the logs and create a list item for each log
         logs.forEach((log) => {
           const listItem = document.createElement('li');
-          listItem.textContent = `Log Date: ${new Date(log.date).toLocaleString()}`;
+          listItem.textContent = `Log Date: ${new Date(log.timestamp).toLocaleString()}`; // Use `timestamp` instead of `date`
           logList.appendChild(listItem); // Add each list item to the log list container
         });
       } catch (error) {

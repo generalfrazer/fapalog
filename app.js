@@ -9,11 +9,6 @@ const PORT = 3000;
 
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch(err => console.error('Could not connect to MongoDB...', err));
-
-
 // Connect to MongoDB using Mongoose
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -69,8 +64,8 @@ app.get('/logs', (req, res) => {
 
 app.get('/api/logs', async (req, res) => {
   try {
-    // Fetch all the logs from the database, sorted in descending order by date.
-    const logs = await Log.find().sort({ date: -1 });
+    // Fetch all logs from the database, sorted in descending order by timestamp
+    const logs = await Log.find().sort({ timestamp: -1 });
     res.json(logs);  // Send back the logs as JSON
   } catch (err) {
     res.status(500).send('Server Error');
